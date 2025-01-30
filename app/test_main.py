@@ -1,34 +1,26 @@
+import pytest
 from app.main import check_password
 
 
-def test_check_password() -> None:
-    assert check_password("M@nLen8") is False, \
-        "Password must be at least 8 characters long"
-    assert check_password("Qwerty123$") is True, \
-        "Password is within parameters"
-    assert check_password("Qwerty123") is False, \
-        "Password must contain at least one special character"
-    assert check_password("qwerty123$") is False, \
-        "Password must contain at least one uppercase letter"
-    assert check_password("QWERTY123$") is True, \
-        "Password is within parameters"
-    assert check_password("Qwerty$") is False, \
-        "Password must contain at least one digit"
-    assert check_password("Qwerty1234$") is True, \
-        "Password is within parameters"
-    assert check_password("Qwerty12345") is False, \
-        "Password must contain at least one special character"
-    assert check_password("Qwerty1234") is False, \
-        "Password must contain at least one special character"
-    assert check_password("Qwerty$123") is True, \
-        "Password is within parameters"
-    assert check_password("Qwerty$1234") is True, \
-        "Password is within parameters"
-    assert check_password("Qwerty$12345") is True, \
-        "Password is within parameters"
-    assert check_password("Qwerty17M@xLength") is False, \
-        "Password cannot be longer than 16 characters"
-    assert check_password("Qwerty1M@xLength") is True, \
-        "Password is within parameters"
-    assert check_password("Qwerty$TooLong1") is True, \
-        "Password is within parameters"
+@pytest.mark.parametrize(
+    "password, expected",
+    [
+        ("M@nLen8", False), 
+        ("Qwerty123$", True),
+        ("Qwerty123", False),
+        ("qwerty123$", False),
+        ("QWERTY123$", True),
+        ("Qwerty$", False),
+        ("Qwerty1234$", True),
+        ("Qwerty12345", False),
+        ("Qwerty1234", False),
+        ("Qwerty$123", True),
+        ("Qwerty$1234", True),
+        ("Qwerty$12345", True),
+        ("Qwerty17M@xLength", False),
+        ("Qwerty1M@xLength", True),
+        ("Qwerty$TooLong1", True),
+    ]
+)
+def test_check_password(password: str, expected: str) -> None:
+    assert check_password(password) == expected
