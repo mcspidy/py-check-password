@@ -2,7 +2,7 @@ from app.main import check_password
 
 
 def test_check_password() -> None:
-    assert check_password("I@m12") is False, \
+    assert check_password("M@nLen8") is False, \
         "Password must be at least 8 characters long"
     assert check_password("Qwerty123$") is True, \
         "Password is within parameters"
@@ -26,8 +26,8 @@ def test_check_password() -> None:
         "Password is within parameters"
     assert check_password("Qwerty$12345") is True, \
         "Password is within parameters"
-    assert check_password("Qwerty$MaxLength") is False, \
-        "Password cannot be longer than 12 characters"
+    assert check_password("Qwerty17M@xLength") is False, \
+        "Password cannot be longer than 16 characters"
     assert check_password("Qwerty1M@xLength") is True, \
         "Password is within parameters"
     assert check_password("Qwerty$TooLong1") is True, \
